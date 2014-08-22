@@ -17,16 +17,23 @@ app.directive("timeInput", function() {
       scope.ampm = 'AM';
 
       //start hours
-      scope.$watch('stepHr', function(stepHr) {
-        scope.hrOptions = _.range(1, 13, stepHr);
+
+      scope.$watch('stepHr', function(hours) {
+        hours = Number(scope.stepHr);
+        scope.hrOptions = _.range(1, 13, hours);
       });
       scope.hr = 1;
 
       //start minutes
-      scope.$watch('stepMin', function(stepMin) {
-            scope.minOptions = _.range(0, 59, stepMin);
+      scope.$watch('stepMin', function(minutes) {
+        minutes = Number(scope.stepMin);
+        scope.minOptions = ["00"];
+        scope.minOptions = _.map(_.range(0, 60, minutes), function(val) {
+          val = String(Math.floor(val / 10)) + String(val % 10);
+          return val;
+        });
       });
-      scope.min = 0;
+      scope.min = "00";
     }
   };
 });
